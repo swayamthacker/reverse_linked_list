@@ -1,0 +1,131 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int x;
+    node* nextptr;
+};
+
+node* root;
+node* tail;
+node* pointer;
+//node* currentptr;
+int temp = -1;
+void insertnode(int);
+int top = 0;
+int store;
+void traverse(node *);
+void traverse(node **);
+void reverse(node **,node**);
+//void swap(node*, node*);
+
+int main()
+{
+    while(temp!=0)
+    {
+        cout<<"Enter 1 to add an element to the list"<<endl;
+        cout<<"Enter 2 to traverse the whole list"<<endl;
+        cout<<"Enter 3 to reverse the elements of the list"<<endl;
+        //cout<<"Enter 4 to print the reversed linked list"<<endl;
+        cout<<"Enter 0 to exit"<<endl;
+        cin>>temp;
+
+        switch(temp)
+        {
+            case 1:
+            {
+                cout<<"Please enter the element to be added to the list"<<endl;
+                cin>>store;
+                insertnode(store);
+                break;
+            }
+            case 2:
+            {
+                cout<<"These are the elements in the list"<<endl;
+                traverse(root);
+                break;
+            }
+            case 3:
+            {
+                cout<<"These are the elements reversed"<<endl;
+                reverse(&root,&tail);
+                traverse(root);
+                break;
+            }
+
+        }
+    }
+
+    return 0;
+}
+
+void insertnode(int element)
+{
+    pointer  = new node;
+    pointer->x = element;
+    pointer->nextptr = 0;
+
+    if(top==0)
+    {
+        root = pointer;
+        tail = pointer;
+        tail->nextptr = root;
+    }
+    else
+    {
+        tail->nextptr = pointer;
+        tail = pointer;
+        tail->nextptr = root;
+    }
+    top++;
+}
+
+void traverse(node* root)
+{
+    node* currentptr;
+   if(root==NULL)
+   {
+       cout<<"The list is empty"<<endl;
+       return;
+   }
+    else
+    {
+        currentptr = root;
+        while(currentptr!=tail)
+        {
+            cout<<currentptr->x<<endl;
+            currentptr = currentptr->nextptr;
+        }
+        cout<<currentptr->x<<endl;
+    }
+}
+
+
+
+void reverse(node** root,node** tail)
+{
+    node* prevptr = NULL;
+    node* presentptr = *root;
+    node* next;
+    //node* temp;
+    while(presentptr!=NULL)
+    {
+        next = presentptr->nextptr;
+        presentptr->nextptr = prevptr;
+        prevptr = presentptr;
+        presentptr = next;
+    if(presentptr==*root)
+    {
+        break;
+    }
+    }
+    (*root)->nextptr = prevptr;
+    *tail = *root;
+    *root = prevptr;
+    //traverse(*root);
+
+}
+
+
